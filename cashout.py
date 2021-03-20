@@ -87,12 +87,17 @@ def cashout(port, peer, peer_index):
                                                                                              txn_hash[
                                                                                                  'transactionHash']))
 
+    count = 0
     while True:
         response = requests.get(DEBUG_ENDPOINT + ":{}/chequebook/cashout/{}".format(port, peer))
         cashout_result = response.json()
         if cashout_result['result'] == None:
             print("Waiting... ", end="", flush=True)
             time.sleep(5)
+            count += 1
+            if count == 12: #try for 1 minute and move on if txn not successful.
+                print("Moving on ... Check goerli for issues...")
+                break
             continue
         else:
             print("Successful cashout")
