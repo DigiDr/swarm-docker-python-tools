@@ -10,6 +10,7 @@ START_NODE_PORT = 1635  # first nodes port e.g. 1635
 PORT_INTERVAL = 100
 
 MIN_AMOUNT = 10000000000000
+GAS_LIMIT = 100000 #this should be enough
 
 DEBUG_ENDPOINT = 'http://localhost'
 
@@ -89,7 +90,7 @@ def cashout(port, peer, peer_index):
 
     count = 0
     while True:
-        response = requests.get(DEBUG_ENDPOINT + ":{}/chequebook/cashout/{}".format(port, peer))
+        response = requests.get(DEBUG_ENDPOINT + ":{}/chequebook/cashout/{}".format(port, peer), headers={"gas-limit":str(GAS_LIMIT)})
         cashout_result = response.json()
         if cashout_result['result'] == None:
             print("Waiting... ", end="", flush=True)
