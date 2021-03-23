@@ -127,8 +127,8 @@ def run_cashout_all_nodes():
             print("Running cashout on node: {} ...".format(node), end="", flush=True)
             requests.get('http://localhost:{}'.format(port))
             cashout_all_peers(port)
-        except:
-            print("Error on node {}".format(node))
+        except Exception as e:
+            print("Error on node {}: {}".format(node, e))
             continue
 
 
